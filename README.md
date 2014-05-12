@@ -6,3 +6,8 @@ All you need is:
 * API credentials which your application uses for usual REST requests and signatures (obtained from nk.pl),
 * Message body, link title and link params to include in each message,
 * A list of `person.id`s of recipients
+
+
+This project is havily based on :
+* http://oauth.googlecode.com/svn/code/php
+* https://github.com/qbolec/PHP-Framework
