@@ -2,9 +2,9 @@
 class NKException extends Exception{}
 class NKNotificationsSender{
   private $endpoint_url = 'http://opensocial.nk-net.pl/v09/social/rest/messages/@me/@self/@outbox';
-  private $app_id = 273;
-  private $key = 'dupa biskupa';
-  private $secret = '8a6eafc1-9971-4559-b7aa-bb1b558068c5';
+  private $app_id = PUT YOUR ID HERE;
+  private $key = PUT YOUR AUTHENTICATION KEY HERE;
+  private $secret = PUT YOUR AUTHENTICATION SECRET HERE;
   private $consumer;
 
   public function __construct(){
