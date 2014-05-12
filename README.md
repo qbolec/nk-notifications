@@ -51,17 +51,17 @@ Running
 -------
 Once the NKNotificationsSender.php is properly configured for your app, you can send notifications like this:
 ```
-php send_notification.php --body [TEXT MESSAGE] --link_title [LINK TITLE] --uri_params [URI PARAMS]
+php send_notifications.php --body [TEXT MESSAGE] --link_title [LINK TITLE] --uri_params [URI PARAMS]
 ```
 and feed ids of persons to STDIN. For example:
 ```
-php send_notification.php --body 'You need to milk the cow!' --link_title 'Milk it!' --uri_params 'action=milk&source=notification' <<< "person.123456"
+php send_notifications.php --body 'You need to milk the cow!' --link_title 'Milk it!' --uri_params 'action=milk&source=notification' <<< "person.123456"
 ```
 
 You can provide as many person ids as you want - one in each line. This makes it supper easy to send bulk of thousands of messages with a single run of the script - for example:
 ```
 mysql --skip-column-names <<< "SELECT person_id FROM users" | 
-php send_notification.php --body 'X-Mass offer is here!' --link_title 'Visit Shop!' --uri_params 'action=shop&source=ad'
+php send_notifications.php --body 'X-Mass offer is here!' --link_title 'Visit Shop!' --uri_params 'action=shop&source=ad'
 ```
 
 The `--body` controls the "black" text of the notification. The `--link_title` is the "blue" fragment which is the link to your application. 
