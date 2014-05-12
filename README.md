@@ -17,7 +17,14 @@ This project is havily based on :
 
 Installation
 ------------
-Download the contents of this repo. That's it.
+Download the contents of this repo. 
+```
+wget https://github.com/qbolec/nk-notifications/archive/master.zip
+unzip master.zip
+mv nk-notifications-master nk-notifications
+cd nk-notifications
+```
+That's it.
 
 Just make sure you have PHP with Curl installed, by running:
 `php -i | grep -i curl`
