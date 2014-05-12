@@ -13,7 +13,7 @@ All you need is:
 
 This project is heavily based on :
 * http://oauth.googlecode.com/svn/code/php
-* https://github.com/qbolec/PHP-Framework
+* https://gist.github.com/rraptorr/4971813
 
 Installation
 ------------
