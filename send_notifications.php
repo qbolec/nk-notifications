@@ -16,7 +16,7 @@ $options = getopt(null,array(
   'link_title:',
 ));
 $uri_params = array();
-parse_str($options['uri_params'],$uri_params);
+$ret=parse_str($options['uri_params'],$uri_params);
 $body = $options['body'];
 $link_title = $options['link_title'];
 
@@ -29,10 +29,10 @@ while(!feof(STDIN)){
   }
   $recipients_ids[] = $person_id;
   if(count($recipients_ids) == 100){ //you can send the same notification to at most 100 users with single call
-    $sender->send($body,$link_title,$uri_params,$recipients_ids);
+    var_dump($sender->send($body,$link_title,$uri_params,$recipients_ids));
     $recipients_ids = array();
   }
 }
 if(!empty($recipients_ids)){
-  $sender->send($body,$link_title,$uri_params,$recipients_ids);
+  var_dump($sender->send($body,$link_title,$uri_params,$recipients_ids));
 }
