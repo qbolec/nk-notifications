@@ -26,7 +26,7 @@ cd nk-notifications
 ```
 That's it.
 
-Just make sure you have PHP with Curl installed, by running:
+Just make sure you have PHP with cURL installed, by running:
 `php -i | grep -i curl`
 The output should be something like:
 ```
