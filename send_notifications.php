@@ -16,7 +16,7 @@ $options = getopt(null,array(
   'link_title:',
 ));
 $uri_params = array();
-$ret=parse_str($options['uri_params'],$uri_params);
+parse_str($options['uri_params'],$uri_params);
 $body = $options['body'];
 $link_title = $options['link_title'];
 
