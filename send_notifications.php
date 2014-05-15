@@ -9,18 +9,27 @@ if(!function_exists('curl_init')) {
 require 'OAuth.php';
 require 'NKNotificationsSender.php';
 
-
-$options = getopt(null,array(
-  'uri_params:',
-  'body:',
-  'link_title:',
-));
+function require_option($name){
+  $options = getopt(null,array(
+    'uri_params:',
+    'body:',
+    'link_title:',
+    'key:',
+    'secret:',
+  ));
+  if(!array_key_exists($name,$options)){
+    die("you must provide --$name argument\n");
+  }
+  return $options[$name];
+}
 $uri_params = array();
-parse_str($options['uri_params'],$uri_params);
-$body = $options['body'];
-$link_title = $options['link_title'];
+parse_str(require_option('uri_params'),$uri_params);
+$body = require_option('body');
+$link_title = require_option('link_title');
+$key = require_option('key');
+$secret = require_option('secret');
 
-$sender = new NKNotificationsSender();
+$sender = new NKNotificationsSender($key,$secret);
 $recipients_ids = array();
 while(!feof(STDIN)){
   $person_id = trim(fgets(STDIN));
@@ -28,11 +37,11 @@ while(!feof(STDIN)){
     break;
   }
   $recipients_ids[] = $person_id;
-  if(count($recipients_ids) == 100){ //you can send the same notification to at most 100 users with single call
-    var_dump($sender->send($body,$link_title,$uri_params,$recipients_ids));
+  if(count($recipients_ids) == NKNotificationsSender::MAX_RECIPIENTS_PER_REQUEST){
+    $sender->send($body,$link_title,$uri_params,$recipients_ids);
     $recipients_ids = array();
   }
 }
 if(!empty($recipients_ids)){
-  var_dump($sender->send($body,$link_title,$uri_params,$recipients_ids));
+  $sender->send($body,$link_title,$uri_params,$recipients_ids);
 }
