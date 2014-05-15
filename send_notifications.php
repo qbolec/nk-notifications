@@ -31,17 +31,23 @@ $secret = require_option('secret');
 
 $sender = new NKNotificationsSender($key,$secret);
 $recipients_ids = array();
+$batch_no = 0;
 while(!feof(STDIN)){
   $person_id = trim(fgets(STDIN));
+  if($person_id){
+    $recipients_ids[] = $person_id;
+  }
+  if(!$person_id || count($recipients_ids) == NKNotificationsSender::MAX_RECIPIENTS_PER_REQUEST){
+    echo "Sending batch #" . $batch_no++ . "...\n"; 
+    try{
+      $sender->send($body,$link_title,$uri_params,$recipients_ids);
+      echo "OK..\n";
+    }catch(NKException $e){
+      echo "ERR:" . $e->getMessage() . "\n";
+    }
+    $recipients_ids = array();
+  }
   if(!$person_id){
     break;
   }
-  $recipients_ids[] = $person_id;
-  if(count($recipients_ids) == NKNotificationsSender::MAX_RECIPIENTS_PER_REQUEST){
-    $sender->send($body,$link_title,$uri_params,$recipients_ids);
-    $recipients_ids = array();
-  }
-}
-if(!empty($recipients_ids)){
-  $sender->send($body,$link_title,$uri_params,$recipients_ids);
 }
