@@ -46,11 +46,11 @@ which you can easily find at https://developers.nk.pl/developers in your app's s
 
 You can send notifications like this:
 ```
-php send_notifications.php --key [OAUTH KEY] --secret [OAUTH SECRET] --body [TEXT MESSAGE] --link_title [LINK TITLE] --uri_params [URI PARAMS]
+php send_notifications.php --key [OAUTH KEY] --secret [OAUTH SECRET] --body [TEXT MESSAGE] --link_title [LINK TITLE] --uri_params [URI PARAMS] --icon_uri [ICON URI]
 ```
 and feed ids of persons to STDIN. For example:
 ```
-php send_notifications.php --key 'myapptestkey' --secret 'qwerty' --body 'You need to milk the cow!' --link_title 'Milk it!' --uri_params 'action=milk&source=notification' <<< "person.123456"
+php send_notifications.php --key 'myapptestkey' --secret 'qwerty' --body 'You need to milk the cow!' --link_title 'Milk it!' --uri_params 'action=milk&source=notification' --icon_uri '' <<< "person.123456"
 ```
 
 You can provide as many person ids as you want - one in each line. This makes it supper easy to send bulk of thousands of messages with a single run of the script - for example:
@@ -64,5 +64,7 @@ The `--body` controls the "black" text of the notification.
 The `--link_title` is the "blue" fragment which is the link to your application. 
 
 Use `--uri_params` to provide extra url parameters which will be forwarded to your game/application when user clicks the link, so that you can react accordingly. It is totaly up to you what parameters you want to pass and what is their meaning in your app.
+
+Use `--icon_uri` to provide url to an additional 100x100 px image you want to include in your message (for example: icon of an item). Use an empty string to indicate that you do not want any image. 
 
 Current implementation waits till the end of person ids stream before sending notifications, so if you provide `person.id`s using keyboard you might want to finish the list of ids with a single empty line ( or EOF which is CTRL+D under linux and CTRL+Z under windows).

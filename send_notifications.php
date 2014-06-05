@@ -16,6 +16,7 @@ function require_option($name){
     'link_title:',
     'key:',
     'secret:',
+    'icon_uri:',
   ));
   if(!array_key_exists($name,$options)){
     die("you must provide --$name argument\n");
@@ -28,6 +29,7 @@ $body = require_option('body');
 $link_title = require_option('link_title');
 $key = require_option('key');
 $secret = require_option('secret');
+$icon_uri = require_option('icon_uri');
 
 $sender = new NKNotificationsSender($key,$secret);
 $recipients_ids = array();
@@ -40,7 +42,7 @@ while(!feof(STDIN)){
   if(!$person_id || count($recipients_ids) == NKNotificationsSender::MAX_RECIPIENTS_PER_REQUEST){
     echo "Sending batch #" . $batch_no++ . "...\n"; 
     try{
-      $sender->send($body,$link_title,$uri_params,$recipients_ids);
+      $sender->send($body,$link_title,$uri_params,$icon_uri,$recipients_ids);
       echo "OK..\n";
     }catch(NKException $e){
       echo "ERR:" . $e->getMessage() . "\n";

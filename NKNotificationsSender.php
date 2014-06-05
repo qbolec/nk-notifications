@@ -17,9 +17,10 @@ class NKNotificationsSender{
    * @param $body string The body of the message (must be a simple text, without HTML tags or entities)
    * @param $link_title string The clickable text used for the button attached to the message. This should be a simple text as well.
    * @param $uri_params array A map<string,string> from keys to values. This can be arbitrary parametrs that you want to be passed via URL params to your app after clicking the button.
-   * @param recipients_ids array The list of person.id-s of recipients
+   * @param $icon_uri string An URI to an image attached to the message. Use null if no image is provided.
+   * @param $recipients_ids array The list of person.id-s of recipients
    */
-  public function send($body,$link_title,array $uri_params,array $recipients_ids){
+  public function send($body,$link_title,array $uri_params,$icon_uri,array $recipients_ids){
     foreach(array_chunk($recipients_ids,self::MAX_RECIPIENTS_PER_REQUEST) as $recipients_ids_chunk){
       $data = array(
         'title' => $link_title,
@@ -27,6 +28,9 @@ class NKNotificationsSender{
         'type' => 'notification',
         'recipients' => $recipients_ids_chunk,
       );
+      if(!empty($icon_uri)){
+        $data['urls'] = array(array('type' => 'icon', 'value' => $icon_uri));
+      }
       if(!empty($uri_params)){
         $data['nkOptUrlParams'] = $uri_params;
       }
